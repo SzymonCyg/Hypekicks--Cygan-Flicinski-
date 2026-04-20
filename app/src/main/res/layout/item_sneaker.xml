@@ -1,41 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
-
+    android:padding="8dp"
+    >
     <ImageView
         android:id="@+id/ivSneaker"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
         />
-
-    <LinearLayout
-        android:layout_marginStart="8dp"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/tvSneakerBrand"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvSneakerBrand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="marka"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-
-            <TextView
-                android:id="@+id/tvSneakerModel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="model"
-                android:textSize="16sp"
-                />
-    </LinearLayout>
+        android:text="marka"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp"
+        />
+    <TextView
+        android:id="@+id/tvSneakerModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="model"
+        android:textSize="16sp"
+        />
 </LinearLayout>
