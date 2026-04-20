@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="Hypekicks"
-        android:textSize="40dp"
+        android:textSize="48dp"
         android:textStyle="italic"
         />
 

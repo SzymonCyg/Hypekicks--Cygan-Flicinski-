@@ -24,14 +24,22 @@ class SneakerRepository {
     }
 
 
-    fun getAllSneakers(onResult: (List<Sneaker>) -> Unit) {
-        collection.get()
-            .addOnSuccessListener { result ->
-                val list = result.documents.mapNotNull {
-                    it.toObject(Sneaker::class.java)
-                }
-                onResult(list)
+    fun getAllSneakersRealtime(onResult: (List<Sneaker>) -> Unit) {
+        collection.addSnapshotListener { snapshot, error ->
+
+            if (error != null || snapshot == null) {
+                onResult(emptyList())
+                return@addSnapshotListener
             }
+
+            val list = snapshot.documents.mapNotNull { doc ->
+                doc.toObject(Sneaker::class.java)?.apply {
+                    id = doc.id
+                }
+            }
+
+            onResult(list)
+        }
     }
 
 
