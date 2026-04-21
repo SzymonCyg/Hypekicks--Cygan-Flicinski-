@@ -31,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        binding.adminOpenButton.setOnClickListener {
+            val intent = android.content.Intent(this, AdminActivity::class.java)
+            startActivity(intent)
+        }
+
+
         setupRecycler()
         loadData()
     }
