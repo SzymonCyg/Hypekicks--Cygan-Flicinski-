@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hypekicks">
         <activity
+            android:name=".SneakerDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
