@@ -27,85 +27,76 @@
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/etMarka"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:hint="Marka"
+            android:inputType="textCapWords" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dodaj nowe buty"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/etModel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Model"
+            android:inputType="textCapWords" />
 
-            <EditText
-                android:id="@+id/etMarka"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Marka"
-                android:inputType="textCapWords" />
+        <EditText
+            android:id="@+id/etCena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cena"
+            android:inputType="numberDecimal" />
 
-            <EditText
-                android:id="@+id/etModel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Model"
-                android:inputType="textCapWords" />
+        <EditText
+            android:id="@+id/etRok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Rok wydania"
+            android:inputType="number" />
 
-            <EditText
-                android:id="@+id/etCena"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Cena"
-                android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/etUrlZdjecia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL zdjęcia"
+            android:inputType="textUri" />
 
-            <EditText
-                android:id="@+id/etRok"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Rok wydania"
-                android:inputType="number" />
+        <Button
+            android:id="@+id/btnDodajButy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Dodaj Buty" />
 
-            <EditText
-                android:id="@+id/etUrlZdjecia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="URL zdjęcia"
-                android:inputType="textUri" />
+        <Button
+            android:id="@+id/btnUsunButy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Usuń Buty"
+            android:backgroundTint="#FF0000"
+            android:textColor="@color/white" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/btnDodajButy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Dodaj Buty" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Zarządzaj listą"
+        android:textSize="18sp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#CCCCCC"
-                android:layout_marginVertical="16dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Zarządzaj listą"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListaButowAdmin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
-
-        </LinearLayout>
-    </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListaButowAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="8dp" />
 
 </LinearLayout>

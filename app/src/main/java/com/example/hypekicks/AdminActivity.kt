@@ -1,7 +1,6 @@
 package com.example.hypekicks
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -46,7 +45,6 @@ class AdminActivity : AppCompatActivity() {
             edytowaneButy = buty
             wypelnijFormularz(buty)
             binding.btnDodajButy.text = "Aktualizuj Dane"
-            Toast.makeText(this, "Edycja: ${buty.modelName}", Toast.LENGTH_SHORT).show()
         }
         binding.rvListaButowAdmin.layoutManager = LinearLayoutManager(this)
         binding.rvListaButowAdmin.adapter = adapter
@@ -65,7 +63,6 @@ class AdminActivity : AppCompatActivity() {
                 val rok = rokStr.toIntOrNull() ?: 0
 
                 if (edytowaneButy != null) {
-                    // Aktualizacja istniejącego rekordu
                     val zaktualizowaneButy = edytowaneButy!!.copy(
                         brand = marka,
                         modelName = model,
@@ -75,15 +72,9 @@ class AdminActivity : AppCompatActivity() {
                     )
                     
                     repository.updateSneaker(zaktualizowaneButy) { sukces ->
-                        if (sukces) {
-                            Toast.makeText(this, "Zaktualizowano pomyślnie!", Toast.LENGTH_SHORT).show()
-                            wyczyscFormularz()
-                        } else {
-                            Toast.makeText(this, "Błąd podczas aktualizacji", Toast.LENGTH_SHORT).show()
-                        }
+                        if (sukces) wyczyscFormularz()
                     }
                 } else {
-                    // Dodawanie nowego rekordu
                     val noweButy = Sneaker(
                         brand = marka,
                         modelName = model,
@@ -93,13 +84,17 @@ class AdminActivity : AppCompatActivity() {
                     )
 
                     repository.addSneaker(noweButy) { sukces ->
-                        if (sukces) {
-                            wyczyscFormularz()
-                        }
+                        if (sukces) wyczyscFormularz()
                     }
                 }
-            } else {
-                Toast.makeText(this, "Wypełnij wymagane pola", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.btnUsunButy.setOnClickListener {
+            edytowaneButy?.let { buty ->
+                repository.deleteSneaker(buty.id) { sukces ->
+                    if (sukces) wyczyscFormularz()
+                }
             }
         }
     }
