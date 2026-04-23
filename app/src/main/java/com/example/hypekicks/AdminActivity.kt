@@ -17,6 +17,7 @@ class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
     private val repository = SneakerRepository()
     private lateinit var adapter: SneakerAdapter
+    private var edytowaneButy: Sneaker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,10 @@ class AdminActivity : AppCompatActivity() {
 
     private fun konfigurujRecyclerView() {
         adapter = SneakerAdapter(emptyList()) { buty ->
-            Toast.makeText(this, "Wybrano: ${buty.modelName}", Toast.LENGTH_SHORT).show()
+            edytowaneButy = buty
+            wypelnijFormularz(buty)
+            binding.btnDodajButy.text = "Aktualizuj Dane"
+            Toast.makeText(this, "Edycja: ${buty.modelName}", Toast.LENGTH_SHORT).show()
         }
         binding.rvListaButowAdmin.layoutManager = LinearLayoutManager(this)
         binding.rvListaButowAdmin.adapter = adapter
@@ -60,20 +64,38 @@ class AdminActivity : AppCompatActivity() {
                 val cena = cenaStr.toDoubleOrNull() ?: 0.0
                 val rok = rokStr.toIntOrNull() ?: 0
 
-                val noweButy = Sneaker(
-                    brand = marka,
-                    modelName = model,
-                    resellPrice = cena,
-                    releaseYear = rok,
-                    imageUrl = urlZdjecia
-                )
+                if (edytowaneButy != null) {
+                    // Aktualizacja istniejącego rekordu
+                    val zaktualizowaneButy = edytowaneButy!!.copy(
+                        brand = marka,
+                        modelName = model,
+                        resellPrice = cena,
+                        releaseYear = rok,
+                        imageUrl = urlZdjecia
+                    )
+                    
+                    repository.updateSneaker(zaktualizowaneButy) { sukces ->
+                        if (sukces) {
+                            Toast.makeText(this, "Zaktualizowano pomyślnie!", Toast.LENGTH_SHORT).show()
+                            wyczyscFormularz()
+                        } else {
+                            Toast.makeText(this, "Błąd podczas aktualizacji", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    // Dodawanie nowego rekordu
+                    val noweButy = Sneaker(
+                        brand = marka,
+                        modelName = model,
+                        resellPrice = cena,
+                        releaseYear = rok,
+                        imageUrl = urlZdjecia
+                    )
 
-                repository.addSneaker(noweButy) { sukces ->
-                    if (sukces) {
-                        Toast.makeText(this, "Dodano pomyślnie!", Toast.LENGTH_SHORT).show()
-                        wyczyscFormularz()
-                    } else {
-                        Toast.makeText(this, "Błąd podczas dodawania", Toast.LENGTH_SHORT).show()
+                    repository.addSneaker(noweButy) { sukces ->
+                        if (sukces) {
+                            wyczyscFormularz()
+                        }
                     }
                 }
             } else {
@@ -88,11 +110,21 @@ class AdminActivity : AppCompatActivity() {
         }
     }
 
+    private fun wypelnijFormularz(buty: Sneaker) {
+        binding.etMarka.setText(buty.brand)
+        binding.etModel.setText(buty.modelName)
+        binding.etCena.setText(buty.resellPrice.toString())
+        binding.etRok.setText(buty.releaseYear.toString())
+        binding.etUrlZdjecia.setText(buty.imageUrl)
+    }
+
     private fun wyczyscFormularz() {
         binding.etMarka.text.clear()
         binding.etModel.text.clear()
         binding.etCena.text.clear()
         binding.etRok.text.clear()
         binding.etUrlZdjecia.text.clear()
+        binding.btnDodajButy.text = "Dodaj Buty"
+        edytowaneButy = null
     }
 }
